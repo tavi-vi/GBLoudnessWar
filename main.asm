@@ -2,7 +2,7 @@ INCLUDE "gbhw.inc"
 INCLUDE "song.inc"
 
 MACRO SampleDelay
-    DEF DELAY SET 25
+    DEF DELAY SET 24
     ASSERT FATAL, \1 <= DELAY
     REPT (DELAY - \1)
         nop
@@ -11,10 +11,10 @@ ENDM
 
 MACRO LoadSample
     ld A, B             ; 1
-    and A, $80          ; 2
-    srl A               ; 2
+    and A, %11000000    ; 2
     srl A               ; 2
     ld [rAUD3LEVEL], A  ; 4
+    sla B               ; 2
     sla B               ; 2
 ENDM
 
@@ -83,18 +83,21 @@ begin:
 ; sample 3
     LoadSample         ; 13
     
+    ld E, [HL]         ; 2
+    inc HL             ; 2
     ld D, $80          ; 2
 
     SampleDelay 15
 ; sample 4
     LoadSample         ; 13
-
+    
+    ld B, E            ; 1
     ld A, H            ; 1
     cp A, D            ; 1
     jr NZ, .notLastSample
 .lastSample          ; 2
     ld DE, .cont     ; 3
-    SampleDelay 20
+    SampleDelay 21
 ; sample 5
     LoadSample          ; 13
 
@@ -125,7 +128,7 @@ begin:
 
 .notLastSample       ; 3
     ld DE, .cont     ; 3
-    SampleDelay 21
+    SampleDelay 22
 ; sample 5
     LoadSample         ; 13
 
@@ -140,13 +143,13 @@ begin:
     LoadSample         ; 13
 
     push DE            ; 4
-    ld D, [HL]         ; 2
+    ld E, [HL]         ; 2
     inc HL             ; 2
 
     SampleDelay 21
 ; sample 8
     LoadSample         ; 13
-    ld B, D            ; 1
+    ld B, E            ; 1
     ret                ; 4
 .cont
     SampleDelay 22

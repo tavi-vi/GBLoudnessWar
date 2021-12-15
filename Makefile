@@ -7,7 +7,7 @@ FIXFLAGS = -f g
 # Project files
 SRCS = main.asm
 OBJS = $(SRCS:.asm=.o)
-DEPS = data.bin song.inc
+DEPS = data-stereo.bin song.inc
 EXE  = loud.gb
 SYM  = loud.sym
 
@@ -32,11 +32,11 @@ $(RELEXE): $(RELOBJS) $(DEPS) | prep
 $(RELDIR)/%.o: %.asm $(DEPS) | prep 
 	$(AS) -o $@ $<
 
-song.inc: data.bin songInclude.c
+song.inc: data-stereo.bin songInclude.c
 	tcc -run songInclude.c >song.inc
 
-data.bin: data.raw raw2bin.c
-	tcc -run raw2bin.c <data.raw >data.bin
+data-stereo.bin: data-stereo.raw raw2bin.c
+	tcc -run raw2bin.c <data-stereo.raw >data-stereo.bin
 
 # Other rules
 prep:

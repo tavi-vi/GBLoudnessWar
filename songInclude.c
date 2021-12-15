@@ -32,7 +32,7 @@ int
 main() {
     const int bankSize = 0x4000;
 
-    char *f = "./data.bin";
+    char *f = "./data-stereo.bin";
     int fs = fileSize(f);
     int nBanks = fs / bankSize;
     int remainder = fs % bankSize;
