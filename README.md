@@ -1,0 +1,1 @@
+I made this to play Dan Worrall's "I Won The Loudness War", and it does. Running `make` will build the game to `release/loud.gb`. The only input missing is the audio file. It makes a stereo, signed 8-bit, 44.1kHz, raw PCM file at data.raw. The dependencies to build are the tcc C compiler, and RGBASM. The Nix flake can make a shell with these dependencies.
